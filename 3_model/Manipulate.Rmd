@@ -1,0 +1,23 @@
+---
+title: "Manipulation"
+author: "Dean Stewart"
+date: "14/03/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+data(gapminder)
+```
+
+## Data Manipulation
+begins on page 21 of learning guide for week 3
+
+filter
+```{r examples on gapminder, echo=TRUE}
+gapminder_all <- read_csv("../1_data/gapminderall.csv")
+gapminder_all %>% filter(!is.na(fertility))
+```
+
+
