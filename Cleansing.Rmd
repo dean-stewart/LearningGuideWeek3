@@ -1,0 +1,57 @@
+---
+title: "Cleanse"
+author: "Dean Stewart"
+date: "14/03/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+## Tibbles vs dataframes
+
+```{r page 19 examples}
+my_tib <- tibble(x=1:3, y=c("blue","pink","yellow"))
+my_tib
+```
+
+```{r}
+my_df <- data.frame(x=1:3, y=c("blue","pink","yellow"))
+my_df
+```
+
+```{r}
+as_tibble(my_df)
+
+```
+
+```{r}
+data(starwars)
+starwars
+```
+
+```{r}
+as.data.frame(starwars)
+```
+
+These all look the same on the screen, because rmarkdown prints them like they're a tibble anyway!
+they look different in the output file
+
+
+subset of a dataframe is a vector
+```{r}
+my_df[,1]
+```
+
+subset of a tibble is still a tibble
+```{r}
+my_tib[,1]
+```
+
+to extract a vector from a tibble, use the double square bracket
+```{r}
+my_tib[['x']]
+```
+
