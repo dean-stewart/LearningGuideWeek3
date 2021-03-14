@@ -20,4 +20,83 @@ gapminder_all <- read_csv("../1_data/gapminderall.csv")
 gapminder_all %>% filter(!is.na(fertility))
 ```
 
+select
+```{r}
+gapminder_all %>% select(infant_mortality, fertility)
+```
+
+Mutate
+```{r}
+gapminder_all_gdpcap <- gapminder_all %>%
+  mutate(gdp_per_capita = gdp/population) %>%
+  select(gdp_per_capita)
+```
+
+Arrange
+```{r}
+gapminder_all_gdpcap %>% arrange(gdp_per_capita)
+
+#descending
+gapminder_all_gdpcap %>% arrange(desc(gdp_per_capita))
+```
+
+Summarise
+```{r}
+gapminder_all %>% summarise(n_distinct(country))
+gapminder_all %>% filter(!is.na(population)) %>%
+  summarise(mean_pop = mean(population), sd_pop = sd(population))
+```
+
+
+Pull() or dotplaceholder
+```{r}
+mean_pop <- gapminder_all %>%
+  filter(!is.na(population)) %>%
+  summarise(mean_pop = mean(population))
+
+class(mean_pop)
+
+gapminder_all2 <- gapminder_all %>%
+  filter(!is.na(gdp)) %>%
+  mutate("gdpovermeanpop" = gdp/mean_pop) %>%
+  select(gdp, gdpovermeanpop)
+
+gapminder_all2
+
+#this produces a whole pile of dataframes
+
+```
+
+need to use pull so you don't get a pile of dataframes
+```{r}
+# need to use .$ or pull
+mean_pop <- gapminder_all %>%
+  filter(!is.na(population)) %>%
+  summarise(mean_pop = mean(population)) %>%
+  .$mean_pop
+
+class(mean_pop)
+
+mean_pop <- gapminder_all %>%
+  filter(!is.na(population)) %>%
+  summarise(mean_pop = mean(population)) %>%
+  pull(mean_pop)
+
+class(mean_pop)
+
+#now divide by mean_pop
+gapminder_all3 <- gapminder_all %>% filter(!is.na(gdp)) %>%
+  mutate("gdpovermeanpop" = gdp/mean_pop) %>%
+  select(gdp, gdpovermeanpop)
+
+gapminder_all3
+
+```
+
+group_by
+```{r}
+gapminder_all %>% group_by(continent) %>%
+  filter(!is.na(gdp)) %>%
+  summarise(average=mean(gdp))
+```
 
