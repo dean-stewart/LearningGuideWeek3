@@ -1,9 +1,16 @@
 ---
-title: "Untitled"
+title: "Week 3 Learning Guide"
 author: "Dean Stewart"
 date: "13/03/2021"
 output: html_document
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+## Gapminder project
 
 ```{r load data, include=FALSE}
 library(gapminder)
@@ -19,38 +26,32 @@ gapminder_url <- "https://raw.githubusercontent.com/jennybc/gapminder/master/ins
 
 gapminder_tsv <- read_tsv(gapminder_url)
 #read in the data which are in tsv format
-
 ```
 
 
+Don't forget to put a gap between the ## and the title
 
 
-
-
-
-
-
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r tidyform data, echo=TRUE}
+gap_long <- gapminder_wide_csv %>%
+  gather(key, value, -continent, -country) %>%
+  separate(key, c("variable_name","year"), "_") %>%
+  spread(variable_name,value) %>%
+  mutate(year=as.numeric(year))
+head(gap_long)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r, echo=TRUE}
+gap_long <- gapminder_wide_csv %>%
+  pivot_longer(c(-continent, -country),"key", "value") %>%
+  separate(key, c("variable_name","year"), "_") %>%
+  pivot_wider(names_from = variable_name, values_from = value) %>%
+  mutate(year=as.numeric(year))
+head(gap_long)
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+str(gapminder_csv)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

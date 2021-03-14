@@ -1,0 +1,66 @@
+---
+title: "Summarise Data"
+author: "Dean Stewart"
+date: "14/03/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+#ONLY TO BE RUN AFTER LOAD THE DATA SCRIPT
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Data Summaries to assess data quality
+
+```{r summarise, echo=TRUE}
+str(gapminder)
+```
+
+```{r}
+class(gapminder)
+```
+
+```{r}
+dim(gapminder)
+```
+
+```{r}
+table(gapminder$country)
+```
+
+```{r}
+prop.table(table(gapminder$year))
+#gives the proportions of each result - so like table, but just divided by total count
+```
+
+```{r}
+summary(gapminder)
+```
+
+```{r}
+library(psych)
+describe(gapminder)
+```
+
+```{r}
+cor(gapminder[,3:6])
+```
+## Example code
+from page 16 of week 3 guide
+
+```{r examplep16, echo=TRUE}
+#leave out some of the descriptive stuff done above, so start in 2nd para
+library(janitor)
+gapminder_adjnames <- gapminder
+names(gapminder_adjnames) <- c("country", "continent", "year", "Life Exp", "population", "Gdp Per cap")
+make.names(names(gapminder_adjnames))
+gapminder_clean <- clean_names(gapminder_adjnames)
+names(gapminder_clean)
+gapminder_clean2 <- rename(gapminder_adjnames, life_exp = "Life Exp", gdp_per_cap = "Gdp Per cap")
+names(gapminder_clean2)
+```
+
+```{r}
+
+```
+

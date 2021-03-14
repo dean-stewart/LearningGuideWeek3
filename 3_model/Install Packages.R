@@ -2,3 +2,5 @@
 
 install.packages("gapminder")
 install.packages("tidyverse")
+install.packages("psych")
+install.packages("janitor")
