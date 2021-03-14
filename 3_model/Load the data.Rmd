@@ -1,0 +1,57 @@
+---
+title: "Week 3 Learning Guide"
+author: "Dean Stewart"
+date: "13/03/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+## Gapminder project
+
+```{r load data, include=FALSE}
+library(gapminder)
+library(readr)
+gapminder_csv <- read_csv("../1_data/gapminder.csv")
+#read in the data equivalent to data above in 1
+
+gapminder_wide_csv <- read_csv("../1_data/gapminder_wide.csv")
+#read in wide data which we need to tidy (explored later)
+
+gapminder_url <- "https://raw.githubusercontent.com/jennybc/gapminder/master/inst/extdata/gapminder.tsv"
+#put url where the data is as an object eg. gapminder_url
+
+gapminder_tsv <- read_tsv(gapminder_url)
+#read in the data which are in tsv format
+```
+
+
+Don't forget to put a gap between the ## and the title
+
+
+```{r tidyform data, echo=TRUE}
+gap_long <- gapminder_wide_csv %>%
+  gather(key, value, -continent, -country) %>%
+  separate(key, c("variable_name","year"), "_") %>%
+  spread(variable_name,value) %>%
+  mutate(year=as.numeric(year))
+head(gap_long)
+```
+
+```{r, echo=TRUE}
+gap_long <- gapminder_wide_csv %>%
+  pivot_longer(c(-continent, -country),"key", "value") %>%
+  separate(key, c("variable_name","year"), "_") %>%
+  pivot_wider(names_from = variable_name, values_from = value) %>%
+  mutate(year=as.numeric(year))
+head(gap_long)
+```
+
+
+```{r}
+str(gapminder_csv)
+```
+
