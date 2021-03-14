@@ -12,7 +12,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Data Summaries to assess data quality
 
-```{r summarise, echo=TRUE}
+```{r summarise, echo=FALSE}
+library(gapminder)
+data(gapminder)
 str(gapminder)
 ```
 
@@ -51,6 +53,7 @@ from page 16 of week 3 guide
 ```{r examplep16, echo=TRUE}
 #leave out some of the descriptive stuff done above, so start in 2nd para
 library(janitor)
+library(dplyr)
 gapminder_adjnames <- gapminder
 names(gapminder_adjnames) <- c("country", "continent", "year", "Life Exp", "population", "Gdp Per cap")
 make.names(names(gapminder_adjnames))
@@ -60,7 +63,8 @@ gapminder_clean2 <- rename(gapminder_adjnames, life_exp = "Life Exp", gdp_per_ca
 names(gapminder_clean2)
 ```
 
-```{r}
-
+```{r second part of example, echo=TRUE}
+cor(gapminder[, 3:6])
+cor(gapminder[, 3:6], use="pairwise.complete.obs") #use this when there are NAs in the data
 ```
 
