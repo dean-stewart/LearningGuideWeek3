@@ -55,3 +55,21 @@ to extract a vector from a tibble, use the double square bracket
 my_tib[['x']]
 ```
 
+
+## sequential variable creation
+
+Tibbles can create variables in a sequential mannger but dataframes cannot
+```{r sequential creation, echo=TRUE}
+#this won't work
+#anotherDF <- data.frame(nItems = c(12,45,107),
+#                        cost = c(0.5,1.2,1.8),
+#                        totalWorth = nItems*cost)
+
+
+#this will
+anothertib <- tibble(nItems = c(12,45,107),
+                        cost = c(0.5,1.2,1.8),
+                        totalWorth = nItems*cost)
+
+```
+
