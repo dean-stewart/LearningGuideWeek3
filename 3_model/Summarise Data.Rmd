@@ -68,3 +68,12 @@ cor(gapminder[, 3:6])
 cor(gapminder[, 3:6], use="pairwise.complete.obs") #use this when there are NAs in the data
 ```
 
+### Other useful functions
+* **nrow(dataframe)** - returns the number of rows
+* **ncol(dataframe)** - returns the number of columns
+* **colnames(dataframe)** or **names(dataframe)** - returns the columns *names*
+* **view(dataframe)** - brings up the dataframe in a graphical table views
+* **unique(vector)** - returns the unique values in a vector
+* **glimpse(dataframe)** - similar to str, but easier to read
+
+
