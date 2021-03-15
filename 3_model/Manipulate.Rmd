@@ -100,3 +100,29 @@ gapminder_all %>% group_by(continent) %>%
   summarise(average=mean(gdp))
 ```
 
+distinct
+```{r}
+distinct(gapminder_all) #means all distinct and removes duplicates
+distinct(gapminder_all, country, year, infant_mortality) #can also select certain columns for distinct which is differnt to the unique function - only these columns are reproduced
+
+# Note: use duplicated() for a vector or dataframe
+length(gapminder_all$country[!duplicated(gapminder_all$country)])
+length(gapminder_all$country)
+count(distinct(gapminder_all,country))
+
+gapminder_allwithkey <- gapminder_all %>%
+  mutate(key=paste0(country, "_", year))
+#duplicated(gapminder_allwithkey)
+gapminder_allwithkey$key[duplicated(gapminder_allwithkey$key)]  #this will produce any duplicates - there aren't any
+
+#duplicated equivalent for dataframe
+#I HAVE NO IDEA WHAT THIS DOES!!!
+a <- gapminder_all[c(3,5),]
+gapminder_dup <- rbind(gapminder_all, a)
+gapminder_dup %>% mutate(dup=duplicated(gapminder_dup)) %>% filter(dup == TRUE)
+
+b <- as.vector(duplicated(gapminder_dup))
+gapminder_which_dup <- gapminder_dup[b,]
+gapminder_which_dup
+```
+
