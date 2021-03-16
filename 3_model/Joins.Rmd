@@ -1,0 +1,92 @@
+---
+title: "Joins"
+author: "Dean Stewart"
+date: "15/03/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+data(gapminder)
+gapminder_all <- read_csv("../1_data/gapminderall.csv")
+
+gapminder_withkey <- gapminder %>%
+  mutate(key=paste0(country, "_", year))
+gapminder_allwithkey <- gapminder_all %>%
+  mutate(key=paste0(country, "_", year))
+```
+
+## Examples of joins on gapminder case study
+
+Left Join
+```{r}
+gapminderleft <- left_join(gapminder_withkey,gapminder_allwithkey, by = "key")
+dim(gapminder_withkey)
+dim(gapminderleft)
+dim(gapminder_allwithkey)
+```
+
+Right Join
+```{r}
+gapminderright <- right_join(gapminder_withkey,gapminder_allwithkey, by = "key")
+dim(gapminder_withkey)
+dim(gapminderright)
+dim(gapminder_allwithkey)
+```
+
+Inner Join
+```{r}
+gapminderinner <- inner_join(gapminder_withkey,gapminder_allwithkey, by = "key")
+dim(gapminder_withkey)
+dim(gapminderinner)
+dim(gapminder_allwithkey)
+```
+
+Full join (outer)
+```{r}
+gapminderfull <- full_join(gapminder_withkey,gapminder_allwithkey, by = "key")
+dim(gapminder_withkey)
+dim(gapminderfull)
+dim(gapminder_allwithkey)
+```
+
+Semi join (inner join but only first tibble's columns)
+```{r}
+gapmindersemi <- semi_join(gapminder_withkey,gapminder_allwithkey, by = "key")
+dim(gapminder_withkey)
+dim(gapmindersemi)
+dim(gapminder_allwithkey)
+```
+
+Anti join (whatever doesn't match - first tibble columns)
+```{r}
+gapminderanti <- anti_join(gapminder_withkey,gapminder_allwithkey, by = "key")
+dim(gapminder_withkey)
+dim(gapminderanti)
+dim(gapminder_allwithkey)
+```
+
+Intersect
+```{r}
+#intersect needs the tibbles to have the same column names and number of columns
+gapminder3col <- tibble(country = gapminder$country, year = gapminder$year, lifeExp = gapminder$lifeExp)
+gapminder_all3col <- tibble(country = gapminder_all$country, year = gapminder_all$year, lifeExp = gapminder_all$life_expectancy)
+
+dim(gapminder3col)
+dim(gapminder_all3col)
+
+dim(intersect(gapminder3col, gapminder_all3col))
+```
+
+Union
+```{r}
+dim(union(gapminder3col, gapminder_all3col))
+```
+setdiff
+```{r}
+dim(setdiff(gapminder3col, gapminder_all3col))  #what's in gapminder but not gapminder_all
+dim(setdiff(gapminder_all3col, gapminder3col)) #otehr way around
+```
+
+
